@@ -58,7 +58,7 @@ class ModelBase(type):
             # creates :class:`pymongo.connection.Connection` object without
             # establishing connection. It's required if there is no running
             # mongodb at this time but we want to create :class:`Model`.
-            connection = Connection(*hostport, _connect=False)
+            connection = Connection(_connect=False, *hostport)
             mcs._connections[hostport] = connection
 
         new_class._meta = options
@@ -115,20 +115,20 @@ class AttrDict(dict):
     def __getattr__(self, attr):
         try:
             return super(AttrDict, self).__getitem__(attr)
-        except KeyError as excn:
+        except KeyError, excn:
             raise AttributeError(excn)
 
     def __setattr__(self, attr, value):
         try:
             # Okay to set directly here, because we're not recursing.
             self[attr] = value
-        except KeyError as excn:
+        except KeyError, excn:
             raise AttributeError(excn)
 
     def __delattr__(self, key):
         try:
             return super(AttrDict, self).__delitem__(key)
-        except KeyError as excn:
+        except KeyError, excn:
             raise AttributeError(excn)
 
     def __setitem__(self, key, value):

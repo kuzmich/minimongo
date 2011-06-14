@@ -40,7 +40,7 @@ class Collection(PyMongoCollection):
         """Same as :meth:`pymongo.collection.Collection.find`, except
         it returns the right document class.
         """
-        return Cursor(self, *args, wrap=self.document_class, **kwargs)
+        return Cursor(self, wrap=self.document_class, *args, **kwargs)
 
     def find_one(self, *args, **kwargs):
         """Same as :meth:`pymongo.collection.Collection.find_one`, except

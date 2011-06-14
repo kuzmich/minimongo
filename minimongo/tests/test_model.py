@@ -308,7 +308,9 @@ def test_deletion():
     object_b = TestModel.collection.find({'x': 100})
     assert object_b.count() == 1
 
-    map(operator.methodcaller('remove'), object_b)
+    #map(operator.methodcaller('remove'), object_b)
+    for model in object_b:
+        model.remove()
 
     object_a = TestModel.collection.find({'x': 100})
     assert object_a.count() == 0
